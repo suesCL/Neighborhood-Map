@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+		<meta charset="UTF-8">
+		<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDNxuYpEhbITBtZfqQGdIOIJTLfmIlJFvE"></script>
 		<title>Neighborhood Map</title>
     <style>
       #map {
-         width: 100%;
+         width: 80%;
          height: 400px;
          background-color: grey;
       }
@@ -14,15 +14,22 @@
 	</head>
 
 	<body>
-    <!-- <p><input data-bind="textInput: location" /></p> -->
-    <ul data-bind="foreach: locations">
-      <li data-bind="text: name"></li>
+		<form  data-bind="submit: filterLocation">
+			<input type="text" name="location" value="" data-bind="textInput: inputLocation">
+  		<input type="submit" value="Filter">
+		</form>
+
+		<ul data-bind="foreach: locations">
+      <li data-bind="text: locationName"></li>
     </ul>
 
     <div id="map"></div>
+		<div id="info"></div>
 
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
+		<script src="js/map.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 	</body>
