@@ -1,7 +1,7 @@
 
 var map;
 var markers = [];
-// var infoWindows = [];
+var infoWindows = [];
 var infoWindow;
 
 //Calls the initializeMap() function when the page loads
@@ -34,7 +34,7 @@ window.addEventListener('resize', function(e) {
    }
  };
 
- function openInfoWindow(place,){
+ function openInfoWindow(place,new ){
    var content = "<p>sdfs</p>";
    for(var i = 0; i < markers.length; i++){
      if(markers[i].title == place){
