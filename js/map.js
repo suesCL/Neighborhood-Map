@@ -34,7 +34,7 @@ window.addEventListener('resize', function(e) {
    }
  };
 
- function openInfoWindow(place,new ){
+ function openInfoWindow(place){
    var content = "<p>sdfs</p>";
    for(var i = 0; i < markers.length; i++){
      if(markers[i].title == place){

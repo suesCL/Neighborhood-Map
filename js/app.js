@@ -54,6 +54,11 @@ var ViewModel = function(){
     animateMarker(place);
   };
 
+  self.collapseWindow = function(){
+    document.getElementById("filterForm").style.visibility = "hidden";
+    document.getElementById("locationList").style.visibility = "hidden";
+  }
+
 };
 
 

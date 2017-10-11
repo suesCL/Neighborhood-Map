@@ -14,14 +14,18 @@
 	</head>
 
 	<body>
-		<form  data-bind="submit: filterLocation">
+		<form  id = "filterForm" data-bind="submit: filterLocation">
 			<input type="text" name="location" value="" data-bind="textInput: inputLocation">
   		<input id = "filterButton" type="submit" value="Filter">
 		</form>
 
-		<ul data-bind="foreach: locations">
+		<ul id = "locationList" data-bind="foreach: locations">
       <li data-bind="click: $parent.openInfo,text: $data" id = "placeName"></li>
     </ul>
+
+		<button type="button" data-bind="click:collapseWindow">Collapse</button>
+
+
 
     <div id="map"></div>
 		<div id="info"></div>
