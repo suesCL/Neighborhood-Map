@@ -1,8 +1,4 @@
 
-var Location = function(data){
-  //define observables storing model data
-  this.locationName = ko.observable(data.name);
-};
 
 
 var initlocations = [
@@ -33,7 +29,7 @@ var ViewModel = function(){
   self.locations = ko.observableArray([]);
   //create an observableArray from list of locations
   initlocations.forEach(function(place){
-    self.locations.push(new Location(place));
+    self.locations.push(place.name);
   });
 
   self.inputLocation = ko.observable();
@@ -41,13 +37,21 @@ var ViewModel = function(){
 
   //create a function for filtering
   self.filterLocation = function(){
+    //filter markers
+    filterMarkers(self.inputLocation());
+    //filter item lists
     self.locations.removeAll();
-
     initlocations.forEach(function(place){
       if(place.name.search(self.inputLocation()) != -1){
-        self.locations.push(new Location(place))
+        self.locations.push(place.name)
       };
-    })
+    });
+  };
+
+  //create a function for open Infowindow on marker
+  self.openInfo = function(place){
+    openInfoWindow(place);
+    animateMarker(place);
   };
 
 };

@@ -1,8 +1,11 @@
 
 var map;
+var markers = [];
+// var infoWindows = [];
+var infoWindow;
+
 //Calls the initializeMap() function when the page loads
 window.addEventListener('load', initMap);
-
 //Vanilla JS way to listen for resizing of the window
 //and adjust map bounds
 window.addEventListener('resize', function(e) {
@@ -10,6 +13,36 @@ window.addEventListener('resize', function(e) {
  map.fitBounds(mapBounds);
  });
 
+ //filter markers based on search term
+ function filterMarkers(inputLocation){
+   markers.forEach(function(marker){
+     marker.setMap(null);
+   });
+
+   markers.forEach(function(marker){
+     if(marker.title.search(inputLocation) != -1){
+       marker.setMap(map);
+     };
+   });
+ };
+
+ function animateMarker(place){
+   for(var i = 0; i < markers.length; i++){
+     if((markers[i].title == place) && (markers[i].getAnimation() == null)){
+         markers[i].setAnimation(google.maps.Animation.BOUNCE);
+     }
+   }
+ };
+
+ function openInfoWindow(place,){
+   var content = "<p>sdfs</p>";
+   for(var i = 0; i < markers.length; i++){
+     if(markers[i].title == place){
+       infoWindows[i].open(map, markers[i]);
+       $("#info").append(content);
+     };
+   }
+ };
 
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'));
@@ -49,6 +82,7 @@ function initMap(){
     }
   };
 
+
   function createMapMarker(placeData) {
 
     //save location data from the search result object to local variables
@@ -61,16 +95,28 @@ function initMap(){
     var marker = new google.maps.Marker({
       map: map,
       position: placeData.geometry.location,
+      animation: google.maps.Animation.DROP,
       title: name
+    });
+
+
+    //add animation to marker when clicking
+    marker.addListener('click', function() {
+      if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
     });
 
     // display infoWindow with information from Wikipedia, Flickr images when click marker
     //perform HTTP request
     var contentString = "";
-    $.ajax({
+    var jgxhr = $.ajax({
       type: "GET",
       url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5a932422d527537d72a8449257c08c42&page=7&tags=year&format=json&nojsoncallback=1"
-    }).done(function(data) {
+    })
+    .done(function(data) {
       //select the first photo
       var photo = data["photos"]["photo"][10];
       var farmID = photo["farm"];
@@ -78,17 +124,19 @@ function initMap(){
       var photoID = photo["id"];
       var secret = photo["secret"];
       var contentURL = "https://farm" + farmID + ".staticflickr.com/" + serverID + "/" + photoID + "_" + secret + ".jpg";
+      contentString = '<h1>' + name + '</h1>'+'<div id="bodyContent">' + '<img src=' + contentURL +  '>' + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>'+'</div>';
+    })
+    .fail(function(){
+      alert("Data cannot be loaded")
+    })
 
-      contentString = '<h1>' + name + '</h1>'+'<div id="bodyContent">' + '<img src=' + contentURL +  'alt=flickr photo style="width:200px;height:200px">' + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>'+'</div>';
-    });
-
-
-
-    var infoWindow = new google.maps.InfoWindow({
+    infoWindow = new google.maps.InfoWindow({
       content: contentString
     });
 
-    marker.addListener('click', function() {
+    infoWindows.push(infoWindow);
+
+    marker.addListener('click', function(){
           infoWindow.open(map, marker);
           //testing
           $("#info").append(contentString);
@@ -102,7 +150,10 @@ function initMap(){
     map.fitBounds(bounds);
     // center the map
     map.setCenter(bounds.getCenter());
+
+    markers.push(marker);
   };
+
 
     // Sets the boundaries of the map based on pin locations
     window.mapBounds = new google.maps.LatLngBounds();

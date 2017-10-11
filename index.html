@@ -16,11 +16,11 @@
 	<body>
 		<form  data-bind="submit: filterLocation">
 			<input type="text" name="location" value="" data-bind="textInput: inputLocation">
-  		<input type="submit" value="Filter">
+  		<input id = "filterButton" type="submit" value="Filter">
 		</form>
 
 		<ul data-bind="foreach: locations">
-      <li data-bind="text: locationName"></li>
+      <li data-bind="click: $parent.openInfo,text: $data" id = "placeName"></li>
     </ul>
 
     <div id="map"></div>
