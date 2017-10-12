@@ -1,6 +1,3 @@
-
-
-
 var initlocations = [
   {
     name: "Lynwood,WA"
@@ -25,12 +22,8 @@ var initlocations = [
 
 var ViewModel = function(){
   var self = this;
-
-  self.locations = ko.observableArray([]);
   //create an observableArray from list of locations
-  initlocations.forEach(function(place){
-    self.locations.push(place.name);
-  });
+  self.locations = ko.observableArray([]);
 
   self.inputLocation = ko.observable();
 
@@ -50,11 +43,10 @@ var ViewModel = function(){
 
   //create a function for open Infowindow on marker
   self.openInfo = function(place){
+    debugger;
     openInfoWindow(place);
     animateMarker(place);
   };
-
-
 };
 
 

@@ -1,8 +1,7 @@
 
 var map;
 var markers = [];
-var infoWindows = [];
-var infoWindow;
+var infoWindow = new google.maps.InfoWindow();;
 
 //Calls the initializeMap() function when the page loads
 window.addEventListener('load', initMap);
@@ -34,14 +33,9 @@ window.addEventListener('resize', function(e) {
    }
  };
 
- function openInfoWindow(place){
-   var content = "<p>sdfs</p>";
-   for(var i = 0; i < markers.length; i++){
-     if(markers[i].title == place){
-       infoWindows[i].open(map, markers[i]);
-       $("#info").append(content);
-     };
-   }
+  //open info window when clicking on location name
+ function openInfoWindow(marker){
+       infoWindow.open(map, marker);
  };
 
 function initMap(){
@@ -99,6 +93,7 @@ function initMap(){
       title: name
     });
 
+    ViewModel.locations.push(marker);
 
     //add animation to marker when clicking
     marker.addListener('click', function() {
@@ -124,22 +119,16 @@ function initMap(){
       var photoID = photo["id"];
       var secret = photo["secret"];
       var contentURL = "https://farm" + farmID + ".staticflickr.com/" + serverID + "/" + photoID + "_" + secret + ".jpg";
-      contentString = '<h1>' + name + '/'+ lat + '/'+ lon +'</h1>'+'<div id="bodyContent">' + '<img src=' + contentURL +  '>' + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>'+'</div>';
+      marker.contentString = '<div id="bodyContent"><h3>' + name + '/'+ lat + '/'+ lon +'</h3>'+'<img id = "img" src=' + contentURL +  '>'
+                             + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p></div>';
     })
     .fail(function(){
       alert("Data cannot be loaded")
     })
 
-    var infoWindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
-    infoWindows.push(infoWindow);
-
     marker.addListener('click', function(){
-          infoWindow.open(map, marker);
-          //testing
-          $("#info").append(contentString);
+          infoWindow.setContent(this.contentString);
+          infoWindow.open(map, this);
     });
 
 

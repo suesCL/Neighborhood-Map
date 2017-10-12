@@ -12,11 +12,19 @@
 		<title>Neighborhood Map</title>
     <style>
       #map {
-				position: relative;
+				 position: relative;
          width: 100%;
          height: 800px;
          background-color: grey;
       }
+			#bodyContent {
+				width: 200px;
+				height: 200px;
+			}
+			#img {
+				width: 150px;
+				height: 150px;
+			}
     </style>
 	</head>
 
@@ -25,7 +33,7 @@
 			<input type="text" name="location" value="" data-bind="textInput: inputLocation">
   		<input id = "filterButton" type="submit" value="Filter">
 			<ul id = "locationList" data-bind="foreach: locations">
-	      <li data-bind="click: $parent.openInfo,text: $data" id = "placeName"></li>
+	      <li data-bind="click: $parent.openInfo,text: marker.title" id = "placeName"></li>
 	    </ul>
 		</form>
 
