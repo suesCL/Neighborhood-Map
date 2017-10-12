@@ -1,8 +1,7 @@
 
 var map;
-var markers = [];
 var infoWindow = new google.maps.InfoWindow();;
-
+var markers = [];
 //Calls the initializeMap() function when the page loads
 window.addEventListener('load', initMap);
 //Vanilla JS way to listen for resizing of the window
@@ -25,16 +24,16 @@ window.addEventListener('resize', function(e) {
    });
  };
 
- function animateMarker(place){
-   for(var i = 0; i < markers.length; i++){
-     if((markers[i].title == place) && (markers[i].getAnimation() == null)){
-         markers[i].setAnimation(google.maps.Animation.BOUNCE);
+ function animateMarker(marker){
+     if(marker.getAnimation() == null){
+         marker.setAnimation(google.maps.Animation.BOUNCE);
      }
-   }
- };
+};
+
 
   //open info window when clicking on location name
  function openInfoWindow(marker){
+       infoWindow.setContent(marker.contentString);
        infoWindow.open(map, marker);
  };
 
@@ -92,8 +91,8 @@ function initMap(){
       animation: google.maps.Animation.DROP,
       title: name
     });
-
-    ViewModel.locations.push(marker);
+    markers.push(marker);
+    viewModel.locations.push(marker);
 
     //add animation to marker when clicking
     marker.addListener('click', function() {
@@ -107,9 +106,10 @@ function initMap(){
     // display infoWindow with information from Wikipedia, Flickr images when click marker
     //perform HTTP request
     var contentString = "";
-    var jgxhr = $.ajax({
+    //request from flickr images API
+    var flickrAPI = $.ajax({
       type: "GET",
-      url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5a932422d527537d72a8449257c08c42&page=7&tags=year&format=json&nojsoncallback=1"
+      url: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5a932422d527537d72a8449257c08c42&page=7&format=json&nojsoncallback=1&lon=" + lon + "&lat=" + lat + "&radius =20"
     })
     .done(function(data) {
       //select the first photo
@@ -119,16 +119,33 @@ function initMap(){
       var photoID = photo["id"];
       var secret = photo["secret"];
       var contentURL = "https://farm" + farmID + ".staticflickr.com/" + serverID + "/" + photoID + "_" + secret + ".jpg";
-      marker.contentString = '<div id="bodyContent"><h3>' + name + '/'+ lat + '/'+ lon +'</h3>'+'<img id = "img" src=' + contentURL +  '>'
-                             + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p></div>';
+      marker.contentString = '<div><h4>' + name + '</h4>'+'<img src=' + contentURL +  '></div>';
     })
     .fail(function(){
       alert("Data cannot be loaded")
     })
 
+    //request foursquare APIS
+    var foursquareAPI = $.ajax({
+      type: "GET",
+      url: "https://api.foursquare.com/v2/venues/explore?limit=10&radius=2000&client_id=CAY1Q5N40Q1RNI4P0SCR5HW1Q30SE2T4HNHLWJ4TUPHX5IBF&client_secret=XFGODM5TDNKTRHOZNOO3TQGJDSWPLY5QWCHPU4UTKRC2N10F&v=20171012&m=foursquare&near=" + name
+    })
+    .done(function(data) {
+      var venue = data["response"]["groups"][0]["items"][0]["venue"];
+      var venueName = venue["name"];
+      var category = venue["categories"][0]["name"];
+
+      marker.contentString = marker.contentString + '<p>Recommended venue:' + venueName + '(' + category + ')</p>'
+                             + '<p class = "Attribution">Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>';
+    })
+    .fail(function(){
+      alert("Data cannot be loaded")
+    })
+
+
     marker.addListener('click', function(){
-          infoWindow.setContent(this.contentString);
-          infoWindow.open(map, this);
+      infoWindow.setContent(this.contentString);
+      infoWindow.open(map, this);
     });
 
 
@@ -139,8 +156,6 @@ function initMap(){
     map.fitBounds(bounds);
     // center the map
     map.setCenter(bounds.getCenter());
-
-    markers.push(marker);
   };
 
 

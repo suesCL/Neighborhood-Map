@@ -27,27 +27,27 @@ var ViewModel = function(){
 
   self.inputLocation = ko.observable();
 
-
   //create a function for filtering
   self.filterLocation = function(){
-    //filter markers
+    //call function to filter markers
     filterMarkers(self.inputLocation());
+
     //filter item lists
     self.locations.removeAll();
-    initlocations.forEach(function(place){
-      if(place.name.search(self.inputLocation()) != -1){
-        self.locations.push(place.name)
+    markers.forEach(function(marker){
+      if(marker.title.search(self.inputLocation()) != -1){
+        self.locations.push(marker);
       };
     });
   };
 
   //create a function for open Infowindow on marker
-  self.openInfo = function(place){
-    debugger;
-    openInfoWindow(place);
-    animateMarker(place);
+  self.openInfo = function(marker){
+    openInfoWindow(marker);
+    animateMarker(marker);
   };
 };
 
+var viewModel = new ViewModel();
 
-ko.applyBindings(new ViewModel());
+ko.applyBindings(viewModel);
