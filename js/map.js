@@ -124,13 +124,13 @@ function initMap(){
       var photoID = photo["id"];
       var secret = photo["secret"];
       var contentURL = "https://farm" + farmID + ".staticflickr.com/" + serverID + "/" + photoID + "_" + secret + ".jpg";
-      contentString = '<h1>' + name + '</h1>'+'<div id="bodyContent">' + '<img src=' + contentURL +  '>' + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>'+'</div>';
+      contentString = '<h1>' + name + '/'+ lat + '/'+ lon +'</h1>'+'<div id="bodyContent">' + '<img src=' + contentURL +  '>' + '<p>Attribution: Flickr, <a href="https://www.flickr.com/services/api/">https://www.flickr.com/services/api/</a></p>'+'</div>';
     })
     .fail(function(){
       alert("Data cannot be loaded")
     })
 
-    infoWindow = new google.maps.InfoWindow({
+    var infoWindow = new google.maps.InfoWindow({
       content: contentString
     });
 
