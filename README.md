@@ -29,7 +29,7 @@ Display all locations by default. Display the filtered locations when a filter i
 Display a map with all location markers by default, and displays the filtered location markers when a filter is applied. Unique information will be displayed when clicking on marker. Marker will animate when clicked. 
 
 ***Implementation*** : 
-- Use Google MAp APIS 
+- Use Google Map APIs
 - Inside createMapMarker function in map.js, two click listeners are added to each marker. The click listeners will animate marker and open infoWindow when clicked. 
 - The createMapMarker function makes ajax requests from foursquare and flicker APIs. The function uses "then" function to nest ajax requests and handles error wih fail method.
 
