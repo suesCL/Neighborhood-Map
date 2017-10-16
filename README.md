@@ -31,5 +31,5 @@ Display a map with all location markers by default, and displays the filtered lo
 ***Implementation*** : 
 - Use Google Map APIs
 - Inside createMapMarker function in map.js, two click listeners are added to each marker. The click listeners will animate marker and open infoWindow when clicked. 
-- The createMapMarker function makes ajax requests from foursquare and flicker APIs. The function uses "then" function to nest ajax requests and handles error wih fail method.
+- The createMapMarker function makes ajax requests from foursquare and flicker APIs. The function uses "then" function to nest ajax requests and handles error with fail method.
 
