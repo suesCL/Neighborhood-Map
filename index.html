@@ -15,28 +15,40 @@
 				font-size: xx-small;
 			}
       #map {
-				 position: relative;
-         width: 100%;
+				 display : block;
+         width: 800px;
          height: 800px;
          background-color: grey;
       }
-			
+			form {
+				display: inline-block;
+				margin-top: 5px;
+			}
+			#display {
+				display: inline-block;
+			}
+			#placeName {
+				vertical-align: text-top;
+			}
+
+
+
     </style>
 	</head>
 
 	<body>
-		<form  id = "filterForm" data-bind="submit: filterLocation">
-			<input type="text" name="location" value="" data-bind="textInput: inputLocation">
-  		<input id = "filterButton" type="submit" value="Filter">
-			<ul id = "locationList" data-bind="foreach: locations">
-	      <li data-bind="click: $parent.openInfo,text: title" id = "placeName"></li>
-	    </ul>
-		</form>
+			<form  id = "filterForm" data-bind="submit: filterLocation">
+				<input type="text" name="location" value="" data-bind="textInput: inputLocation"><input id = "filterButton" type="submit" value="Filter">
+				<ul id = "locationList" data-bind="foreach: locations">
+		      <li data-bind="click: $parent.openInfo,text: title" id = "placeName"></li>
+		    </ul>
+			</form>
+			<div id = "display">
+				<button type="button" data-toggle="collapse" data-target="#filterForm" >Collapse</button>
+				<div id="map" ></div>
+			</div>
 
-		<button type="button" data-toggle="collapse" data-target="#filterForm" >Collapse</button>
 
-    <div id="map" ></div>
-		<div id="info"></div>
 
     <script src="js/lib/knockout-3.4.2.js"></script>
     <script src="js/app.js"></script>
