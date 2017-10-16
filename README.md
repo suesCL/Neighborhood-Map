@@ -1,4 +1,4 @@
-# Neighborhood-Map
+# Neighborhood Map Project
 
 ## Project Overview 
 Neighborhood map project features a map of greater Seattle area where users can search for cities, click on the map to read
