@@ -5,7 +5,7 @@ Neighborhood map project features a map of greater Seattle area where users can 
 more information about each city. 
 
 ## Skills learned 
-* Use third party liberies and APIs
+* Use third party libraries and APIs
 * Asynchronous programming
 * Use of frameworks, such as Knockout.js and Ajax 
 
