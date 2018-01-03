@@ -4,22 +4,22 @@
 		<meta charset="UTF-8">
 		<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDNxuYpEhbITBtZfqQGdIOIJTLfmIlJFvE"></script>
 		<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- Latest compiled JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 		<title>Neighborhood Map</title>
-    <style>
+		<style>
 			.Attribution {
 				font-size: xx-small;
 			}
-      #map {
-				 display : block;
-         width: 800px;
-         height: 800px;
-         background-color: grey;
-      }
+			#map {
+				display : block;
+				width: 800px;
+				height: 800px;
+				background-color: grey;
+			}
 			form {
 				display: inline-block;
 				margin-top: 5px;
@@ -33,25 +33,25 @@
 
 
 
-    </style>
+		</style>
 	</head>
 
 	<body>
-			<form  id = "filterForm" data-bind="submit: filterLocation">
-				<input type="text" name="location" value="" data-bind="textInput: inputLocation"><input id = "filterButton" type="submit" value="Filter">
-				<ul id = "locationList" data-bind="foreach: locations">
-		      <li data-bind="click: $parent.openInfo,text: title" id = "placeName"></li>
-		    </ul>
-			</form>
-			<div id = "display">
-				<button type="button" data-toggle="collapse" data-target="#filterForm" >Collapse</button>
-				<div id="map" ></div>
-			</div>
+		<form  id = "filterForm" data-bind="submit: filterLocation">
+			<input type="text" name="location" value="" data-bind="textInput: inputLocation"><input id = "filterButton" type="submit" value="Filter">
+			<ul id = "locationList" data-bind="foreach: locations">
+				<li data-bind="click: $parent.openInfo,text: title" id = "placeName"></li>
+			</ul>
+		</form>
+		<div id = "display">
+			<button type="button" data-toggle="collapse" data-target="#filterForm" >Collapse</button>
+			<div id="map" ></div>
+		</div>
 
 
 
-    <script src="js/lib/knockout-3.4.2.js"></script>
-    <script src="js/app.js"></script>
+		<script src="js/lib/knockout-3.4.2.js"></script>
+		<script src="js/app.js"></script>
 		<script src="js/map.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
