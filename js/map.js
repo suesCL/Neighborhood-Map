@@ -2,6 +2,8 @@
 var map;
 var infoWindow = new google.maps.InfoWindow();;
 var markers = [];
+
+
 //Calls the initializeMap() function when the page loads
 window.addEventListener('load', initMap);
 //Vanilla JS way to listen for resizing of the window
@@ -11,32 +13,35 @@ window.addEventListener('resize', function(e) {
  map.fitBounds(mapBounds);
  });
 
+ 
+ 
  //filter markers based on search term
- function filterMarkers(inputLocation){
-   markers.forEach(function(marker){
-     marker.setMap(null);
-   });
-
-   markers.forEach(function(marker){
-     if(marker.title.search(inputLocation) != -1){
-       marker.setMap(map);
-     };
-   });
+function filterMarkers(inputLocation){
+markers.forEach(function(marker){
+ marker.setMap(null);
+});
+markers.forEach(function(marker){
+ if(marker.title.search(inputLocation) != -1){
+   marker.setMap(map);
  };
+});
+};
 
- function animateMarker(marker){
-     if(marker.getAnimation() == null){
-         marker.setAnimation(google.maps.Animation.BOUNCE);
-     }
+ 
+function animateMarker(marker){
+ if(marker.getAnimation() == null){
+	 marker.setAnimation(google.maps.Animation.BOUNCE);
+ }
 };
 
 
-  //open info window when clicking on location name
- function openInfoWindow(marker){
-       infoWindow.setContent(marker.contentString);
-       infoWindow.open(map, marker);
- };
+//open info window when clicking on location name
+function openInfoWindow(marker){
+   infoWindow.setContent(marker.contentString);
+   infoWindow.open(map, marker);
+};
 
+ 
 function initMap(){
   map = new google.maps.Map(document.getElementById('map'));
 
@@ -104,7 +109,7 @@ function initMap(){
     });
 
     // display infoWindow with information from foursquare and Flickr images when click marker
-    //perform HTTP request
+    //perform HTTP request with API calls 
     var contentString = "";
     $.ajax({
       type: "GET",
@@ -137,10 +142,6 @@ function initMap(){
         alert("Data cannot be loaded")
       });
     });
-
-
-
-
 
 
     marker.addListener('click', function(){
